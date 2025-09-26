@@ -1,10 +1,3 @@
-// I need to pick which player goes first (Random or last player)
-// Display players wins / loses
-// Stop player from clicking selected cells
-// player lose
-//player tie
-//CSS
-
 const cells = document.querySelectorAll('.grid-cell');
 cells.forEach(cell =>
     cell.addEventListener('click', () => play(cell))
@@ -14,60 +7,65 @@ const clearButton = document.querySelector('.clear');
 clearButton.addEventListener('click', clearGrid);
 
 
+//////////////////////
+
 class Player {
     constructor(name) {
         this.name = name;
         this.win = 0;
-        this.lose = 0;
-        this.choices = [];
+        this.choises = [];
     }
     addChoice(choice) {
-        this.choices.push(+choice);
+        this.choises.push(+choice);
     }
     clearChoises() {
-        this.choices = [];
+        this.choises = [];
     }
     wins() {
         this.win++;
-    }
-    loses() {
-        this.lose++;
+        document.querySelector(`#${this.name.toLowerCase()}win`).innerText = this.win;
     }
 }
 
 const xPlayer = new Player('X');
 const oPlayer = new Player('O');
-let currentPlayer = xPlayer;
+let currentPlayer;
 
+/////////////////////////
+
+// 0.5 idea from StackOverflow https://stackoverflow.com/questions/45136711/javascript-random-generate-0-or-1-integer
+
+if(Math.random() > 0.5) 
+    currentPlayer = xPlayer;
+else
+    currentPlayer = oPlayer;
+
+document.querySelector('.turn').innerText = currentPlayer.name;
+
+/////////////////////////
 
 function play(cell) {
-    //disable cell
     cell.classList.add('disable');
-    //Show X or O
     cell.innerText = currentPlayer.name;
-    //Add choice
     currentPlayer.addChoice(+cell.id);
-    //Call win()
     doIWin(currentPlayer);
-    //Switch player
-    currentPlayer = (currentPlayer === xPlayer) ? oPlayer : xPlayer;
-    //Show who's turn is it
-    document.querySelector('.turn').innerText = currentPlayer.name;
+    switchPlayer();
 }
 
 function doIWin(player) {
-    //WinCombos is an array of winner combos
     for (const combo of winCombos) {
         let strike = 0;
         for (const cell of combo) {
-            if (player.choices.includes(cell)) {
+            if (player.choises.includes(cell)) {
                 strike++;
             }
         }
         if (strike === 3) {
             player.wins();
-            document.querySelector('.winner').innerText = currentPlayer.name + ' wins!';
             console.log(player.name + ' wins!');
+            combo.forEach(c => {
+                document.getElementById(c).style.backgroundColor = 'rgba(0, 0, 255, 0.495)';
+            });
             setTimeout(clearGrid, 1500);
             break;
         }
@@ -75,21 +73,20 @@ function doIWin(player) {
 }
 
 function clearGrid() {
-    cells.forEach(cell => cell.innerText = '');
+    cells.forEach(cell => {
+        cell.classList.remove('disable');
+        cell.innerText = '';
+        cell.style.backgroundColor = 'rgba(255, 0, 85, 0.613)';
+    });
     xPlayer.clearChoises();
     oPlayer.clearChoises();
-    document.querySelector('.turn').innerText = currentPlayer.name;
+    switchPlayer();
 }
 
-
-/* 
-the grid numbering
-
-11 | 12 | 13
-21 | 22 | 23
-31 | 32 | 33
-
-*/
+function switchPlayer() {
+    currentPlayer = (currentPlayer === xPlayer) ? oPlayer : xPlayer;
+    document.querySelector('.turn').innerText = currentPlayer.name;
+}
 
 const winCombos = [
     //horiz
