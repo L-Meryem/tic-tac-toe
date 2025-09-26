@@ -15,6 +15,9 @@ class Player {
         this.win = 0;
         this.choises = [];
     }
+    getName(){
+        return this.name;
+    }
     addChoice(choice) {
         this.choises.push(+choice);
     }
@@ -40,13 +43,13 @@ if(Math.random() > 0.5)
 else
     currentPlayer = oPlayer;
 
-document.querySelector('.turn').innerText = currentPlayer.name;
+document.querySelector('.turn').innerText = currentPlayer.getName();
 
 /////////////////////////
 
 function play(cell) {
     cell.classList.add('disable');
-    cell.innerText = currentPlayer.name;
+    cell.innerText = currentPlayer.getName();
     currentPlayer.addChoice(+cell.id);
     doIWin(currentPlayer);
     switchPlayer();
@@ -62,7 +65,6 @@ function doIWin(player) {
         }
         if (strike === 3) {
             player.wins();
-            console.log(player.name + ' wins!');
             combo.forEach(c => {
                 document.getElementById(c).style.backgroundColor = 'rgba(0, 0, 255, 0.495)';
             });
@@ -85,7 +87,7 @@ function clearGrid() {
 
 function switchPlayer() {
     currentPlayer = (currentPlayer === xPlayer) ? oPlayer : xPlayer;
-    document.querySelector('.turn').innerText = currentPlayer.name;
+    document.querySelector('.turn').innerText = currentPlayer.getName();
 }
 
 const winCombos = [
