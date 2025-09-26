@@ -4,12 +4,11 @@ Tic-Tac-Toe
 [Try the Live project!](https://l-meryem.github.io/tic-tac-toe/)
 
 
-<a href="#" target="_blank" ><img width="1000" alt="Screenshot of my tic-tac-toe app" src="#" /></a>
-
-
+<a href="https://l-meryem.github.io/tic-tac-toe/" target="_blank" ><img width="600" alt="Screenshot of my tic-tac-toe app" src="https://github.com/user-attachments/assets/1b27bbee-422e-46a6-9d5a-56d2f2084931" /></a>
 
 
 ### Tech used 
+
  - `HTML`
  - `CSS`
  - `JavaScript`
@@ -18,4 +17,4 @@ Tic-Tac-Toe
 - A diffent way to randomize my values
 - New CSS property pointer-events
 - Player class
-- Changing player's props through methods
+- Changing player's properties through methods
