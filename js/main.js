@@ -82,7 +82,6 @@ function clearGrid() {
     });
     xPlayer.clearChoises();
     oPlayer.clearChoises();
-    switchPlayer();
 }
 
 function switchPlayer() {
